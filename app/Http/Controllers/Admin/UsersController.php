@@ -2,8 +2,8 @@
 
 namespace Educacional\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use Educacional\Http\Controllers\Controller;
+use Educacional\Http\Requests\UsersRequest;
 
 class UsersController extends Controller
 {
@@ -24,16 +24,14 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UsersRequest $request
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
         //
     }
@@ -62,12 +60,10 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UsersRequest $request
+     * @param $id
      */
-    public function update(Request $request, $id)
+    public function update(UsersRequest $request, $id)
     {
         //
     }
