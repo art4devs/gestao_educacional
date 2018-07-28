@@ -27,7 +27,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $users = $this->usersRepository->get();
+
+        return view('admin.users.index', compact([
+            'users'
+        ]));
     }
 
     /**

@@ -6,6 +6,11 @@ use Educacional\Models\User;
 
 class UsersRepository
 {
+    public function get()
+    {
+        return User::orderBy('id', 'DESC')->get();
+    }
+
     public function store(array $data)
     {
         $data['password'] = $this->makePassword();
