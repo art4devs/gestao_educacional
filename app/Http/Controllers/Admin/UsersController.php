@@ -4,9 +4,22 @@ namespace Educacional\Http\Controllers\Admin;
 
 use Educacional\Http\Controllers\Controller;
 use Educacional\Http\Requests\UsersRequest;
+use Educacional\Repositories\UsersRepository;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
+    private $usersRepository;
+
+    /**
+     * UsersController constructor.
+     * @param UsersRepository $usersRepository
+     */
+    public function __construct(UsersRepository $usersRepository)
+    {
+        $this->usersRepository = $usersRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.users.index');
     }
 
     /**
@@ -28,13 +41,16 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
      * @param UsersRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UsersRequest $request)
     {
         $data = $request->only(['name', 'email']);
-        dd($data);
+        $user = $this->usersRepository->store($data);
+        Session::flash('success', "Usuário {$user->name} criado com sucesso!");
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
