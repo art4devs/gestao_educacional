@@ -33,7 +33,8 @@ class UsersController extends Controller
      */
     public function store(UsersRequest $request)
     {
-        //
+        $data = $request->only(['name', 'email']);
+        dd($data);
     }
 
     /**
