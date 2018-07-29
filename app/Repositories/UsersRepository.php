@@ -18,7 +18,8 @@ class UsersRepository
 
     public function store(array $data)
     {
-        $data['password'] = $this->makePassword();
+        $data['enrolment'] = $this->makeEnrolment(3);
+        $data['password']  = $this->makePassword();
         return User::create($data);
     }
 
@@ -38,5 +39,23 @@ class UsersRepository
     {
         // gera uma senha numerica de 6 digitos
         return bcrypt(rand(100000, 999999));
+    }
+
+    private function makeEnrolment(int $type)
+    {
+        $enrolment = date('Y');
+        $enrolment .= $this->defineIntervalEnrolments($type);
+        $enrolment .= User::orderBy('id', 'DESC')->value("id");
+        return $enrolment;
+    }
+
+    private function defineIntervalEnrolments(int $type)
+    {
+        $intervals = [
+            User::ROLE_ADMIN   => 10,
+            User::ROLE_TEACHER => 20,
+            User::ROLE_STUDENT => 30
+        ];
+        return $intervals[$type];
     }
 }
