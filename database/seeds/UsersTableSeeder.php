@@ -1,5 +1,6 @@
 <?php
 
+use Educacional\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -11,8 +12,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Educacional\Models\User::class)->create([
+        factory(User::class)->create([
             'name'  => 'Admin',
+            'enrolment' => date('Y') . 10 . 1,
             'email' => 'programacao.desenvolvimento@gmail.com'
         ]);
     }

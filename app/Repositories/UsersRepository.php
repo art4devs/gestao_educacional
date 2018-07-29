@@ -45,7 +45,7 @@ class UsersRepository
     {
         $enrolment = date('Y');
         $enrolment .= $this->defineIntervalEnrolments($type);
-        $enrolment .= User::orderBy('id', 'DESC')->value("id");
+        $enrolment .= User::orderBy('id', 'DESC')->value("id") + 1;
         return $enrolment;
     }
 
