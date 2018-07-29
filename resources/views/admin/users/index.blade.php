@@ -19,7 +19,14 @@
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>###</td>
+                    <td>
+                        <a href="{{route('admin.users.show', ['user' => $user->id])}}">Visualizar</a> |
+                        <a href="{{route('admin.users.edit', ['user' => $user->id])}}">Editar</a> |
+                        <a data-toggle="modal" data-target="#modal-destroy-{{$user->id}}" style="cursor: pointer;">Excluir</a>
+                        @include('admin.users.includes.modal-destroy')
+                        {{ Form::open(['method' => 'DELETE', 'route' => ['admin.users.destroy', $user->id], 'id' => "form-destroy-{$user->id}"]) }}
+                        {{Form::close()}}
+                    </td>
                 </tr>
                 @empty
 

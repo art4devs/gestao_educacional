@@ -3,7 +3,8 @@
 namespace Educacional\Http\Controllers\Admin;
 
 use Educacional\Http\Controllers\Controller;
-use Educacional\Http\Requests\UsersRequest;
+use Educacional\Http\Requests\UsersCreateRequest;
+use Educacional\Http\Requests\UsersUpdateRequest;
 use Educacional\Repositories\UsersRepository;
 use Illuminate\Support\Facades\Session;
 
@@ -27,7 +28,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->usersRepository->get();
+        $users = $this->usersRepository->all();
 
         return view('admin.users.index', compact([
             'users'
@@ -45,10 +46,10 @@ class UsersController extends Controller
     }
 
     /**
-     * @param UsersRequest $request
+     * @param UsersCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UsersRequest $request)
+    public function store(UsersCreateRequest $request)
     {
         $data = $request->only(['name', 'email']);
         $user = $this->usersRepository->store($data);
@@ -65,7 +66,11 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = $this->usersRepository->get($id);
+
+        return view('admin.users.show', compact([
+            'user'
+        ]));
     }
 
     /**
@@ -76,17 +81,25 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->usersRepository->get($id);
+
+        return view('admin.users.edit', compact([
+            'user'
+        ]));
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param UsersRequest $request
+     * @param UsersUpdateRequest $request
      * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UsersRequest $request, $id)
+    public function update(UsersUpdateRequest $request, $id)
     {
-        //
+        $data = $request->only(['name', 'email']);
+        $this->usersRepository->update($data, $id);
+        Session::flash('success', "Atualização concluída!");
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -97,6 +110,9 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->usersRepository->destroy($id);
+        Session::flash('success', "Exclusão concluída!");
+
+        return redirect()->route('admin.users.index');
     }
 }
