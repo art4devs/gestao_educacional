@@ -38,9 +38,10 @@ class UserCreatedNotification extends Notification
     {
         return (new MailMessage)
                 ->subject("Seja bem vindo a EdUcA!")
-                ->salutation("Sua conta no EdUcA acaba de ser criada.")
+                ->greeting("Sua conta no EdUcA acaba de ser criada.")
                 ->line("Seu número de matricula é {$notifiable->enrolment}")
-                ->action('Notification Action', url('/'))
-                ->line("Obrigado por estar conosco em mais este novo ciclo!");
+                ->action('Criar uma senha', url('/'))
+                ->line("Obrigado por estar conosco em mais este novo ciclo!")
+                ->salutation("Atenciosamente, EdUcA.");
     }
 }

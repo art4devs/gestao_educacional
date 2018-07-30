@@ -8,7 +8,7 @@
             @include('admin.users.includes._form')
             <div class="form-group">
                 {{Form::label('send_mail', 'Enviar e-mail de boas vindas')}}
-                {{Form::checkbox('send_mail', '', true, ['class' => 'pull-left'])}}
+                {{Form::checkbox('send_mail', true, true, ['class' => 'pull-left'])}}
             </div>
             {{ Form::submit('Salvar', ['class' => 'btn btn-success']) }}
             {{ link_to_route('admin.users.index', 'Voltar', [], ['class' => 'btn btn-warning pull-right']) }}

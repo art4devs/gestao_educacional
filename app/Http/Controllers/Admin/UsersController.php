@@ -2,6 +2,7 @@
 
 namespace Educacional\Http\Controllers\Admin;
 
+use Educacional\Events\UserCreatedEvent;
 use Educacional\Http\Controllers\Controller;
 use Educacional\Http\Requests\UsersCreateRequest;
 use Educacional\Http\Requests\UsersUpdateRequest;
@@ -51,8 +52,11 @@ class UsersController extends Controller
      */
     public function store(UsersCreateRequest $request)
     {
-        $data = $request->only(['name', 'email']);
+        $data = $request->only(['name', 'email', 'send_mail']);
         $user = $this->usersRepository->store($data);
+
+        event(new UserCreatedEvent($user, $data));
+
         Session::flash('success', "Usuário {$user->name} criado com sucesso!");
 
         return redirect()->route('admin.users.index');
