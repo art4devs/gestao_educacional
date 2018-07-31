@@ -15,10 +15,12 @@ class SendWelcomeMailListener
      */
     public function handle(UserCreatedEvent $event)
     {
+        $user = $event->getUser();
         $data = $event->getData();
 
         if (isset($data['send_mail'])) {
-            $event->getUser()->notify(new UserCreatedNotification());
+            $tokenResetPass = \Password::broker()->createToken($user);
+            $user->notify(new UserCreatedNotification($tokenResetPass));
         }
     }
 }

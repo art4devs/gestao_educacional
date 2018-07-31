@@ -8,13 +8,18 @@ use Illuminate\Notifications\Messages\MailMessage;
 class UserCreatedNotification extends Notification
 {
     /**
+     * @var string
+     */
+    private $tokenResetPass;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $tokenResetPass)
     {
-        //
+        $this->tokenResetPass = $tokenResetPass;
     }
 
     /**
@@ -40,7 +45,7 @@ class UserCreatedNotification extends Notification
                 ->subject("Seja bem vindo a EdUcA!")
                 ->greeting("Sua conta no EdUcA acaba de ser criada.")
                 ->line("Seu número de matricula é {$notifiable->enrolment}")
-                ->action('Criar uma senha', url('/'))
+                ->action('Criar uma senha', route('password.reset', $this->tokenResetPass))
                 ->line("Obrigado por estar conosco em mais este novo ciclo!")
                 ->salutation("Atenciosamente, EdUcA.");
     }
