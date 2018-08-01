@@ -6,6 +6,9 @@ use Educacional\Events\UserCreatedEvent;
 use Educacional\Http\Controllers\Controller;
 use Educacional\Http\Requests\UsersCreateRequest;
 use Educacional\Http\Requests\UsersUpdateRequest;
+use Educacional\Models\User;
+use Educacional\Models\UserEnrolment;
+use Educacional\Models\UserPassword;
 use Educacional\Repositories\UsersRepository;
 use Illuminate\Support\Facades\Session;
 
@@ -53,13 +56,20 @@ class UsersController extends Controller
     public function store(UsersCreateRequest $request)
     {
         $data = $request->only(['name', 'email', 'send_mail']);
+        $data['password']  = UserPassword::makePassword();
+        $data['enrolment'] = UserEnrolment::makeEnrolment(3);
+
         $user = $this->usersRepository->store($data);
 
         event(new UserCreatedEvent($user, $data));
 
         Session::flash('success', "Usuário {$user->name} criado com sucesso!");
+        Session::flash('user_created', [
+            'newUserId' => $user->id,
+            'cleanPassword' => $data['password']
+        ]);
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.show_details_new_user');
     }
 
     /**
@@ -118,5 +128,18 @@ class UsersController extends Controller
         Session::flash('success', "Exclusão concluída!");
 
         return redirect()->route('admin.users.index');
+    }
+
+    public function showDetailsNewUser()
+    {
+        $userId        = Session::get('user_created')['newUserId'];
+        $cleanPassword = Session::get('user_created')['cleanPassword'];
+
+        $user          = $this->usersRepository->get($userId);
+
+        return view('admin.users.show_details_new_user', compact([
+            'user',
+            'cleanPassword'
+        ]));
     }
 }

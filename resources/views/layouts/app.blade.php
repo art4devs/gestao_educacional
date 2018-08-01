@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        @media print {
+            .hiddenPrint {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="app">

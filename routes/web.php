@@ -23,7 +23,15 @@ Route::prefix('admin')->group(function () {
         'as'        => 'admin.',
         'middleware'=> 'auth'
     ], function () {
-       Route::resource('users', 'UsersController');
+
+        Route::group([
+           'prefix' => 'users',
+           'as' => 'users.'
+        ], function () {
+           Route::get('show-details-new-user', 'UsersController@showDetailsNewUser')->name('show_details_new_user');
+        });
+        Route::resource('users', 'UsersController');
+
     });
 });
 
