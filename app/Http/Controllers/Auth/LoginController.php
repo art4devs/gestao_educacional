@@ -3,6 +3,7 @@
 namespace Educacional\Http\Controllers\Auth;
 
 use Educacional\Http\Controllers\Controller;
+use Educacional\Models\Admin;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -55,6 +56,9 @@ class LoginController extends Controller
         } else {
             $data['enrolment'] = $data['username'];
         }
+        // define que so admins podem logar na area administrativa
+        $data['userable_type'] = Admin::class;
+
         unset($data['username']);
 
         return $data;
