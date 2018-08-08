@@ -26,7 +26,8 @@ class UsersUpdateRequest extends FormRequest
         $id = $this->route('user');
         return [
             'name'  => 'required|min:3|max:100',
-            'email' => "required|email|unique:users,email,{$id}"
+            'email' => "required|email|unique:users,email,{$id}",
+            'user_choices' => 'required|in:1,2,3'
         ];
     }
 }

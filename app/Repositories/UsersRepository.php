@@ -3,6 +3,7 @@
 namespace Educacional\Repositories;
 
 use Educacional\Models\User;
+use Educacional\Models\Userable;
 
 class UsersRepository
 {
@@ -19,7 +20,18 @@ class UsersRepository
     public function store(array $data)
     {
         $data['password']  = bcrypt($data['password']);
-        return User::create($data);
+
+        $user = User::create([
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'enrolment'=> $data['enrolment'],
+            'password' => $data['password'],
+        ]);
+
+        $userable = new Userable($user);
+        $user = $userable->defineUserable($data['user_choices']);
+        $user->save();
+        return $user;
     }
 
     public function update(array $data, int $id)

@@ -55,9 +55,9 @@ class UsersController extends Controller
      */
     public function store(UsersCreateRequest $request)
     {
-        $data = $request->only(['name', 'email', 'send_mail']);
+        $data = $request->only(['name', 'email', 'send_mail', 'user_choices']);
         $data['password']  = UserPassword::makePassword();
-        $data['enrolment'] = UserEnrolment::makeEnrolment(3);
+        $data['enrolment'] = UserEnrolment::makeEnrolment($data['user_choices']);
 
         $user = $this->usersRepository->store($data);
 

@@ -25,7 +25,8 @@ class UsersCreateRequest extends FormRequest
     {
         return [
             'name'  => 'required|min:3|max:100',
-            'email' => 'required|email|unique:users'
+            'email' => 'required|email|unique:users',
+            'user_choices' => 'required|in:1,2,3'
         ];
     }
 }
