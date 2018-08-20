@@ -29,6 +29,8 @@ Route::prefix('admin')->group(function () {
            'as' => 'users.'
         ], function () {
            Route::get('show-details-new-user', 'UsersController@showDetailsNewUser')->name('show_details_new_user');
+           Route::get('update-password', 'UsersSettingsController@editPassword')->name('password.edit');
+           Route::put('update-password', 'UsersSettingsController@updatePassword')->name('password.update');
         });
         Route::resource('users', 'UsersController');
 

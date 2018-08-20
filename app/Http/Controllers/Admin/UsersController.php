@@ -6,7 +6,6 @@ use Educacional\Events\UserCreatedEvent;
 use Educacional\Http\Controllers\Controller;
 use Educacional\Http\Requests\UsersCreateRequest;
 use Educacional\Http\Requests\UsersUpdateRequest;
-use Educacional\Models\User;
 use Educacional\Models\UserEnrolment;
 use Educacional\Models\UserPassword;
 use Educacional\Repositories\UsersRepository;
