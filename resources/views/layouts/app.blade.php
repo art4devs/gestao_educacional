@@ -44,7 +44,9 @@
                     @auth
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
+                            @can('admin')
                             <li><a href="{{route('admin.users.index')}}">Usuários</a></li>   &nbsp;
+                            @endcan
                         </ul>
                     @endauth
 
