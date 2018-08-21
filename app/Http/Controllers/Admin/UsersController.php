@@ -54,7 +54,9 @@ class UsersController extends Controller
      */
     public function store(UsersCreateRequest $request)
     {
-        $data = $request->only(['name', 'email', 'send_mail', 'user_choices']);
+        $data = $request->only(['name', 'email', 'send_mail', 'user_choices', 'zipcode',
+            'address', 'number', 'complement', 'neighborhood', 'city', 'state']);
+
         $data['password']  = UserPassword::makePassword();
         $data['enrolment'] = UserEnrolment::makeEnrolment($data['user_choices']);
 
@@ -108,7 +110,8 @@ class UsersController extends Controller
      */
     public function update(UsersUpdateRequest $request, $id)
     {
-        $data = $request->only(['name', 'email']);
+        $data = $request->only(['name', 'email', 'zipcode', 'address', 'number', 'complement',
+        'neighborhood', 'city', 'state']);
         $this->usersRepository->update($data, $id);
         Session::flash('success', "Atualização concluída!");
 

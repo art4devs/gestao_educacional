@@ -26,6 +26,13 @@ class UsersRepository
             'email'    => $data['email'],
             'enrolment'=> $data['enrolment'],
             'password' => $data['password'],
+            'zipcode' => $data['zipcode'],
+            'address' => $data['address'],
+            'number' => $data['number'],
+            'complement' => $data['complement'],
+            'neighborhood' => $data['neighborhood'],
+            'city' => $data['city'],
+            'state' => $data['state']
         ]);
 
         $userable = new Userable($user);
