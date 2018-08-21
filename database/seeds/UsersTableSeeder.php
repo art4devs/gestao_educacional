@@ -26,11 +26,12 @@ class UsersTableSeeder extends Seeder
 
         $admin = [
             'name'  => 'Admin',
-            'enrolment' => date('Y') . 10 . 1,
+            'enrolment' => date('Y') . 10 . 0,
             'email' => 'programacao.desenvolvimento@gmail.com',
             'password' => '123456',
             'user_choices' => 1
         ];
+        $userRepository->store($admin);
 
         for ($i = $this->qtdUsers; $i > 0; $i--) {
             $choice = rand(1,3);
@@ -44,7 +45,5 @@ class UsersTableSeeder extends Seeder
             ];
             $userRepository->store($user);
         }
-
-        $userRepository->store($admin);
     }
 }
